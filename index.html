@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<!-- saved from url=(0094)file:///C:/Users/%EA%B2%BD%EB%82%A8%EA%B5%90%EC%9C%A1%EC%B2%AD/Downloads/badminton-live_2.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>창북중학교 여중부 배드민턴 대표 선발전</title>
+<link href="./창북중학교 여중부 배드민턴 대표 선발전_files/css2" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2235;
+  --accent:#00e5ff;--admin:#f59e0b;
+  --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;
+  --text:#e8eaf6;--muted:#6b7a9d;--win:#00c896;--lose:#ff4d6d;
+  --border:rgba(0,229,255,0.12);
+  --sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(rgba(0,229,255,.022) 1px,transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(90deg,rgba(0,229,255,.022) 1px,transparent 1px) 0 0 / 36px 36px}
+
+/* ══ 설정 화면 ══ */
+.setup{display:none;position:fixed;inset:0;z-index:500;background:var(--bg);overflow-y:auto;padding-top:var(--st)}
+.setup.show{display:block}
+.setup-inner{max-width:500px;margin:0 auto;padding:28px 18px 80px}
+
+.setup-hero{text-align:center;margin-bottom:28px}
+.setup-hero .icon{font-size:48px;margin-bottom:10px;display:block}
+.setup-hero h2{font-family:'Black Han Sans',sans-serif;font-size:22px;
+  background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.setup-hero p{font-size:12px;color:var(--muted)}
+
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px}
+.step-num{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:6px}
+.step-card h4{font-size:13px;font-weight:700;margin-bottom:5px}
+.step-card p{font-size:12px;color:var(--muted);line-height:1.75}
+.step-card a{color:var(--accent);text-decoration:none}
+.step-card code{background:var(--surface2);padding:1px 6px;border-radius:4px;font-size:11px;color:#f59e0b}
+
+.field-group{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.field-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px}
+.cfg-input{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:12px;padding:11px 13px;
+  outline:none;transition:border-color .15s}
+.cfg-input:focus{border-color:var(--accent)}
+.cfg-input.err{border-color:var(--lose)}
+.setup-err{font-size:11px;color:var(--lose);min-height:16px;margin-top:4px;text-align:center}
+
+.setup-btn{width:100%;height:52px;border-radius:12px;border:none;margin-top:16px;
+  background:linear-gradient(135deg,var(--accent),#0099cc);color:#000;
+  font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;cursor:pointer}
+.setup-btn:active{opacity:.85}
+.setup-btn:disabled{opacity:.5;cursor:not-allowed}
+.reset-link{text-align:center;margin-top:14px;font-size:11px;color:var(--muted)}
+.reset-link button{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:11px}
+
+/* ══ 메인 앱 ══ */
+.app{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;padding-top:var(--st)}
+.app.show{display:flex}
+
+/* 헤더 */
+.hdr{padding:16px 16px 10px;text-align:center;flex-shrink:0}
+.badge{display:inline-block;background:linear-gradient(135deg,var(--accent),#0099cc);color:#000;
+  font-size:9px;font-weight:700;letter-spacing:2.5px;padding:3px 10px;border-radius:2px;margin-bottom:7px}
+.hdr h1{font-family:'Black Han Sans',sans-serif;font-size:22px;
+  background:linear-gradient(135deg,#fff 30%,var(--accent));-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px}
+.hdr p{color:var(--muted);font-size:11px}
+.hdr-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+
+/* 동기화 */
+.sync{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s}
+.sdot.ok{background:var(--win)}.sdot.spin{background:var(--accent);animation:blink 1s infinite}
+.sdot.err{background:var(--lose)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* 관리자 pill */
+.apill{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;
+  font-size:11px;font-weight:700;border:1px solid;cursor:pointer;transition:all .2s}
+.apill.viewer{background:rgba(107,122,157,.1);color:var(--muted);border-color:rgba(107,122,157,.25)}
+.apill.admin{background:rgba(245,158,11,.1);color:var(--admin);border-color:rgba(245,158,11,.35);
+  animation:apulse 2.5s ease-in-out infinite}
+@keyframes apulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 0 4px rgba(245,158,11,.12)}}
+.adot{width:7px;height:7px;border-radius:50%}
+.viewer .adot{background:var(--muted)}.admin .adot{background:var(--admin)}
+
+/* 컨텐츠 */
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 12px calc(72px + var(--sb))}
+.sec{display:none}.sec.on{display:block;animation:fadeup .22s ease}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* 라운드 스크롤 */
+.rscroll{overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:0 12px 10px}
+.rscroll::-webkit-scrollbar{display:none}
+.rnav{display:flex;gap:6px;width:max-content}
+.rbtn{height:36px;padding:0 14px;border:1px solid var(--border);background:var(--surface);
+  color:var(--muted);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;
+  cursor:pointer;border-radius:20px;white-space:nowrap;transition:all .18s}
+.rbtn.on{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.1)}
+.rbtn.done{border-color:var(--win);color:var(--win);background:rgba(0,200,150,.08)}
+
+.rinfo{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;
+  padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.rtitle{font-family:'Black Han Sans',sans-serif;font-size:15px;color:var(--accent)}
+.rprog{font-size:11px;color:var(--muted)}
+
+/* 코트 배지 */
+.court-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;
+  padding:2px 8px;border-radius:10px;margin-bottom:4px;letter-spacing:.3px}
+.court-1{background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.25)}
+.court-2{background:rgba(52,211,153,.15);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+.court-3{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.25)}
+.court-4{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.25)}
+
+/* 경기 카드 */
+.matches{display:flex;flex-direction:column;gap:8px}
+.mwrap{position:relative}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s,transform .1s}
+.mcard.bye{border-style:dashed;opacity:.55}
+.mcard.done{border-color:rgba(0,200,150,.35)}
+.mcard.clickable:active{transform:scale(.99)}
+.minner{display:flex;flex-direction:column}
+.minner.clickable{cursor:pointer}
+.court-row{padding:8px 14px 0;display:flex;align-items:center;justify-content:space-between}
+.match-row{display:flex;align-items:center;min-height:56px}
+.pside{flex:1;display:flex;align-items:center;padding:8px 10px 12px;gap:8px;min-width:0}
+.pside.right{justify-content:flex-end;flex-direction:row-reverse}
+.avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;background:var(--surface2);border:2px solid var(--border);color:var(--muted)}
+.pside.winner .avatar{border-color:var(--win);background:rgba(0,200,150,.14);color:var(--win)}
+.pname{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pside.winner .pname{color:var(--win)}.pside.loser .pname{color:var(--muted)}
+.sarea{display:flex;align-items:center;gap:4px;flex-shrink:0;padding:0 6px}
+.sbox{width:42px;height:42px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;font-family:'Black Han Sans',sans-serif;font-size:21px;color:var(--text)}
+.sbox.win{color:var(--win);border-color:var(--win);background:rgba(0,200,150,.1)}
+.sbox.lose{color:var(--muted)}
+.ssep{font-size:11px;color:var(--muted);font-weight:700}
+.edit-hint{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.45;pointer-events:none}
+.bye-content{padding:14px 16px;font-size:13px;color:var(--muted)}
+.bye-content strong{color:var(--text)}
+
+/* 뷰어 배너 */
+.vbanner{display:none;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;
+  padding:9px 14px;background:rgba(107,122,157,.07);border:1px dashed rgba(107,122,157,.22);
+  border-radius:10px;font-size:12px;color:var(--muted)}
+.vbanner.show{display:flex}
+
+/* 하단 탭 */
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:rgba(17,24,39,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);display:flex;padding-bottom:var(--sb)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;
+  border:none;background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;
+  font-size:10px;font-weight:500;cursor:pointer;transition:color .2s}
+.ticon{font-size:20px;line-height:1}
+.tab.on{color:var(--accent)}.tab.on .ticon{filter:drop-shadow(0 0 6px var(--accent))}
+
+/* 오버레이 공통 */
+.overlay{display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.sheet{border-radius:24px 24px 0 0;width:100%;max-width:480px;
+  padding:0 20px calc(20px + var(--sb));animation:sup .28s cubic-bezier(.34,1.2,.64,1);
+  box-shadow:0 -20px 60px rgba(0,0,0,.4)}
+@keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sh{width:36px;height:4px;border-radius:2px;background:var(--muted);margin:12px auto 18px;opacity:.4}
+
+/* 로그인 */
+.login-sheet{background:var(--surface);border:1px solid rgba(245,158,11,.3)}
+.sicon{font-size:34px;text-align:center;margin-bottom:8px}
+.stitle{font-family:'Black Han Sans',sans-serif;font-size:19px;text-align:center;margin-bottom:4px}
+.ssub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:20px}
+.pwf{width:100%;background:var(--surface2);border:2px solid rgba(245,158,11,.25);border-radius:12px;
+  color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:20px;text-align:center;
+  padding:13px;outline:none;letter-spacing:5px;margin-bottom:8px;transition:border-color .15s}
+.pwf:focus{border-color:var(--admin)}
+.pwf.err{border-color:var(--lose);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ferr{font-size:11px;color:var(--lose);text-align:center;min-height:16px;margin-bottom:12px}
+
+/* 점수 시트 */
+.score-sheet{background:var(--surface);border:1px solid var(--border)}
+.score-stitle{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--accent);margin-bottom:3px}
+.score-ssub{font-size:12px;color:var(--muted);margin-bottom:18px}
+.score-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.sblock{flex:1;min-width:0}
+.sblock .spname{font-size:13px;font-weight:700;margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sblock .spname.r{text-align:right}
+.sinput{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:12px;
+  color:var(--text);font-family:'Black Han Sans',sans-serif;font-size:42px;text-align:center;
+  padding:10px 4px;outline:none;transition:border-color .15s,background .15s;-moz-appearance:textfield}
+.sinput::-webkit-inner-spin-button,.sinput::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.sinput:focus{border-color:var(--accent);background:rgba(0,229,255,.05)}
+.sinput.vwin{border-color:var(--win);color:var(--win);background:rgba(0,200,150,.07)}
+.sinput.vlose{border-color:rgba(255,77,109,.35);color:var(--muted)}
+.vsep{padding-top:48px;font-size:13px;font-weight:700;color:var(--muted);flex-shrink:0;letter-spacing:1px}
+.rnote{text-align:center;font-size:12px;font-weight:600;min-height:18px;margin-bottom:14px;color:#ff4d6d}
+
+/* 버튼 공통 */
+.btns{display:flex;gap:8px}
+.btn{flex:1;height:50px;border-radius:12px;border:none;font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+.btn:active{transform:scale(.97);opacity:.85}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.btn-acc{background:linear-gradient(135deg,var(--accent),#0099cc);color:#000}
+.btn-adm{background:linear-gradient(135deg,var(--admin),#d97706);color:#000}
+.btn-muted{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.btn-danger{background:rgba(255,77,109,.12);color:var(--lose);border:1px solid rgba(255,77,109,.3);flex:0 0 76px;font-size:12px}
+
+/* 순위표 */
+.sumbar{display:flex;gap:8px;margin-bottom:14px}
+.chip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 0;flex:1;text-align:center}
+.chip .cv{font-family:'Black Han Sans',sans-serif;font-size:21px;color:var(--accent);line-height:1.1}
+.chip .cl{font-size:10px;color:var(--muted);margin-top:2px}
+.slist{display:flex;flex-direction:column;gap:7px}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:11px}
+.scard.r1{border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.06)}
+.scard.r2{border-color:rgba(192,192,192,.45);background:rgba(192,192,192,.05)}
+.scard.r3{border-color:rgba(205,127,50,.45);background:rgba(205,127,50,.05)}
+.rbadge{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Black Han Sans',sans-serif;font-size:13px}
+.rbadge.r1{background:rgba(255,215,0,.22);color:var(--gold)}
+.rbadge.r2{background:rgba(192,192,192,.22);color:var(--silver)}
+.rbadge.r3{background:rgba(205,127,50,.22);color:var(--bronze)}
+.rbadge.rn{background:var(--surface2);color:var(--muted)}
+.sinfo{flex:1;min-width:0}
+.sname{font-size:14px;font-weight:700;margin-bottom:5px}
+.scard.r1 .sname{color:var(--gold)}.scard.r2 .sname{color:var(--silver)}.scard.r3 .sname{color:var(--bronze)}
+.sbar-wrap{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.sbar{height:100%;background:linear-gradient(90deg,var(--win),var(--accent));border-radius:2px;transition:width .5s}
+.sstats{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.swl{font-family:'Black Han Sans',sans-serif;font-size:14px}
+.swl .w{color:var(--win)}.swl .sp{color:var(--muted);margin:0 1px;font-size:10px}.swl .l{color:var(--lose)}
+.ssc{font-size:10px;color:var(--muted)}
+.ssc .g{color:var(--win);font-weight:600}.ssc .c{color:var(--lose);font-weight:600}
+.sdiff{font-size:11px;font-weight:700}
+.sdiff.pos{color:var(--win)}.sdiff.neg{color:var(--lose)}.sdiff.zero{color:var(--muted)}
+
+/* 스켈레톤 */
+.skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
+  background-size:200% 100%;animation:shim 1.4s infinite;border-radius:14px}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-h{height:70px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<!-- ① Firebase 설정 화면 -->
+<div class="setup show" id="setup">
+  <div class="setup-inner">
+    <div class="setup-hero">
+      <span class="icon">🏸</span>
+      <h2>Firebase 연결 설정</h2>
+      <p>처음 한 번만 입력하면 기기에 저장됩니다</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">STEP 1 — Firebase 프로젝트 만들기</div>
+      <h4>Realtime Database 생성</h4>
+      <p>
+        1. <a href="https://console.firebase.google.com/" target="_blank">console.firebase.google.com</a> 접속<br>
+        2. 프로젝트 추가 → 이름 입력 → Google Analytics <b>끄기</b> → 만들기<br>
+        3. 왼쪽 메뉴 <b>빌드 → Realtime Database → 데이터베이스 만들기</b><br>
+        4. 위치: <code>asia-southeast1</code> → <b>테스트 모드</b> → 사용 설정
+      </p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">STEP 2 — 웹 앱 등록 &amp; config 복사</div>
+      <h4>firebaseConfig 값 복사</h4>
+      <p>
+        1. 프로젝트 홈 → <b>&lt;/&gt;</b> (웹 앱) 클릭 → 앱 닉네임 입력 → 등록<br>
+        2. 표시되는 <code>firebaseConfig</code> 에서 아래 두 값을 복사해서 입력하세요
+      </p>
+      <div class="field-group">
+        <div class="field-label">DATABASE URL</div>
+        <input class="cfg-input" id="cfgDbUrl" placeholder="https://your-project-default-rtdb.asia-southeast1.firebasedatabase.app" autocomplete="off" spellcheck="false">
+        <div class="field-label" style="margin-top:6px">API KEY</div>
+        <input class="cfg-input" id="cfgApiKey" placeholder="AIzaSy..." autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="setup-err" id="setupErr"></div>
+    <button class="setup-btn" id="setupBtn" onclick="doSetup()">저장하고 시작 →</button>
+    <div class="reset-link"><button onclick="resetSetup()">설정 초기화</button></div>
+  </div>
+</div>
+
+<!-- ② 메인 앱 -->
+<div class="app" id="app">
+  <div class="hdr">
+    <div class="badge">창북중학교 여중부</div>
+    <h1>배드민턴 대표 선발전</h1>
+    <p>9명 풀리그 · 9라운드 · 15점 단세트</p>
+    <div class="hdr-row">
+      <div class="sync">
+        <div class="sdot" id="sdot"></div>
+        <span id="stxt">연결 중...</span>
+      </div>
+      <button class="apill viewer" id="apill" onclick="onPillClick()">
+        <span class="adot"></span>
+        <span id="apilltxt">뷰어 모드</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- 대진표 -->
+    <div class="sec on" id="sec-rounds">
+      <div class="rscroll"><div class="rnav" id="rnav"></div></div>
+      <div class="rinfo">
+        <span class="rtitle" id="rtitle">1라운드</span>
+        <span class="rprog" id="rprog"></span>
+      </div>
+      <div class="vbanner" id="vbanner">🔒 점수 입력은 관리자 모드에서만 가능합니다</div>
+      <div class="matches" id="mlist">
+        <div class="skel skel-h"></div><div class="skel skel-h"></div>
+        <div class="skel skel-h"></div><div class="skel skel-h"></div>
+      </div>
+    </div>
+    <!-- 순위표 -->
+    <div class="sec" id="sec-standings">
+      <div class="sumbar" id="sumbar"></div>
+      <div class="slist" id="slist"></div>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" id="tab-rounds" onclick="showTab(&#39;rounds&#39;)"><span class="ticon">🏸</span>대진표</button>
+    <button class="tab" id="tab-standings" onclick="showTab(&#39;standings&#39;)"><span class="ticon">🏆</span>순위표</button>
+  </nav>
+</div>
+
+<!-- 로그인 오버레이 -->
+<div class="overlay" id="ov-login">
+  <div class="sheet login-sheet">
+    <div class="sh"></div>
+    <div class="sicon">🔐</div>
+    <div class="stitle" style="color:var(--admin)">관리자 로그인</div>
+    <div class="ssub">비밀번호를 입력하세요</div>
+    <input type="password" class="pwf" id="pwf" placeholder="••••" inputmode="numeric" oninput="pwInput()" onkeydown="if(event.key===&#39;Enter&#39;)doLogin()">
+    <div class="ferr" id="pwErr"></div>
+    <div class="btns">
+      <button class="btn btn-muted" onclick="closeOv(&#39;ov-login&#39;)">취소</button>
+      <button class="btn btn-adm" onclick="doLogin()">🔓 입장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로그아웃 오버레이 -->
+<div class="overlay" id="ov-logout">
+  <div class="sheet" style="background:var(--surface);border:1px solid var(--border)">
+    <div class="sh"></div>
+    <div class="sicon">🔓</div>
+    <div class="stitle" style="color:var(--muted)">관리자 모드 종료</div>
+    <div class="ssub" style="margin-bottom:24px">뷰어로 전환할까요?</div>
+    <div class="btns">
+      <button class="btn btn-muted" onclick="closeOv(&#39;ov-logout&#39;)">취소</button>
+      <button class="btn btn-danger" style="flex:1;width:auto" onclick="doLogout()">종료하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 점수 입력 오버레이 -->
+<div class="overlay" id="ov-score">
+  <div class="sheet score-sheet">
+    <div class="sh"></div>
+    <div class="score-stitle">📝 점수 입력</div>
+    <div class="score-ssub" id="score-sub"></div>
+    <div class="score-row">
+      <div class="sblock">
+        <div class="spname" id="sp1"></div>
+        <input type="number" class="sinput" id="si1" min="0" max="99" placeholder="0" inputmode="numeric" oninput="onScoreInput()">
+      </div>
+      <div class="vsep">VS</div>
+      <div class="sblock">
+        <div class="spname r" id="sp2"></div>
+        <input type="number" class="sinput" id="si2" min="0" max="99" placeholder="0" inputmode="numeric" oninput="onScoreInput()">
+      </div>
+    </div>
+    <div class="rnote" id="rnote"></div>
+    <div class="btns">
+      <button class="btn btn-muted" onclick="closeOv(&#39;ov-score&#39;)">취소</button>
+      <button class="btn btn-danger" id="btnReset" onclick="resetScore()" style="display:none">초기화</button>
+      <button class="btn btn-acc" id="btnSave" onclick="saveScore()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, onValue, set, remove }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+/* ══════════════════════════════════════
+   상수
+══════════════════════════════════════ */
+const ADMIN_PW  = '5525';
+const WIN_SCORE = 15;
+
+const PLAYERS = ['박나겸','정윤서','이지민','유태은','이나경','권은우','이하니','곽지후','이소율'];
+
+// 이미지 대진표 기준 (라운드별 코트 순서 유지)
+const ROUNDS = [
+  { matches:[['정윤서','이소율'],['이지민','곽지후'],['유태은','이하니'],['이나경','권은우']], bye:'박나겸',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','이소율'],['정윤서','이하니'],['이지민','권은우'],['유태은','이나경']], bye:'곽지후',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','곽지후'],['이소율','이하니'],['정윤서','이나경'],['이지민','유태은']], bye:'권은우',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','이하니'],['곽지후','권은우'],['이소율','이나경'],['정윤서','이지민']], bye:'유태은',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','권은우'],['이하니','이나경'],['곽지후','유태은'],['이소율','이지민']], bye:'정윤서',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','이나경'],['권은우','유태은'],['이하니','이지민'],['곽지후','정윤서']], bye:'이소율',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','유태은'],['이나경','이지민'],['권은우','정윤서'],['곽지후','이소율']], bye:'이하니',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','이지민'],['유태은','정윤서'],['권은우','이소율'],['이하니','곽지후']], bye:'이나경',
+    courts:['1코트','2코트','3코트','4코트'] },
+  { matches:[['박나겸','정윤서'],['유태은','이소율'],['이나경','곽지후'],['권은우','이하니']], bye:'이지민',
+    courts:['1코트','2코트','3코트','4코트'] },
+];
+
+const COURT_CLS = ['court-1','court-2','court-3','court-4'];
+
+/* ══════════════════════════════════════
+   상태
+══════════════════════════════════════ */
+let scores = ROUNDS.map(r => r.matches.map(() => null));
+let isAdmin = false, curRound = 0, sheetData = null, isSaving = false;
+let db = null;
+
+/* ══════════════════════════════════════
+   설정 & Firebase 초기화
+══════════════════════════════════════ */
+function loadConfig() {
+  const dbUrl  = localStorage.getItem('fb_dbUrl')  || '';
+  const apiKey = localStorage.getItem('fb_apiKey') || '';
+  return { dbUrl, apiKey };
+}
+
+window.doSetup = async function() {
+  const dbUrl  = document.getElementById('cfgDbUrl').value.trim();
+  const apiKey = document.getElementById('cfgApiKey').value.trim();
+  const errEl  = document.getElementById('setupErr');
+  const btn    = document.getElementById('setupBtn');
+  errEl.textContent = '';
+
+  if (!dbUrl.startsWith('https://') || !dbUrl.includes('firebasedatabase')) {
+    document.getElementById('cfgDbUrl').classList.add('err');
+    errEl.textContent = 'Database URL 형식을 확인해주세요'; return;
+  }
+  if (!apiKey.startsWith('AIza')) {
+    document.getElementById('cfgApiKey').classList.add('err');
+    errEl.textContent = 'API Key 형식을 확인해주세요'; return;
+  }
+
+  btn.disabled = true; btn.textContent = '연결 확인 중...';
+  // 간단 연결 테스트
+  try {
+    const testUrl = `${dbUrl.replace(/\/$/, '')}/.json?auth=${apiKey}&shallow=true`;
+    const r = await fetch(testUrl);
+    if (r.status === 401 || r.status === 403) throw new Error('권한 오류 — 테스트 모드가 맞는지 확인하세요');
+    if (!r.ok && r.status !== 404) throw new Error(`연결 실패 (${r.status})`);
+  } catch(e) {
+    errEl.textContent = e.message;
+    btn.disabled = false; btn.textContent = '저장하고 시작 →'; return;
+  }
+
+  localStorage.setItem('fb_dbUrl', dbUrl);
+  localStorage.setItem('fb_apiKey', apiKey);
+  btn.textContent = '저장하고 시작 →'; btn.disabled = false;
+  startApp(dbUrl, apiKey);
+};
+
+window.resetSetup = function() {
+  if (!confirm('설정을 초기화할까요? 저장된 점수는 Firebase에 유지됩니다.')) return;
+  localStorage.removeItem('fb_dbUrl'); localStorage.removeItem('fb_apiKey');
+  location.reload();
+};
+
+function startApp(dbUrl, apiKey) {
+  document.getElementById('setup').classList.remove('show');
+  document.getElementById('app').classList.add('show');
+
+  // Firebase 앱 초기화 (중복 방지)
+  let fbApp;
+  try { fbApp = initializeApp({ apiKey, databaseURL: dbUrl }, 'bmt'); }
+  catch(e) { fbApp = initializeApp({ apiKey, databaseURL: dbUrl }); }
+  db = getDatabase(fbApp);
+
+  applyAdmin();
+  renderRoundNav();
+
+  // 실시간 구독 — scores 노드 전체를 한 번에
+  const scoresRef = ref(db, 'scores');
+  setSyncState('spin', '연결 중...');
+  onValue(scoresRef, snap => {
+    const data = snap.val() || {};
+    scores = ROUNDS.map((r, ri) =>
+      r.matches.map((_, mi) => {
+        const key = `R${ri+1}M${mi+1}`;
+        const v = data[key];
+        return v ? { s1: v.s1, s2: v.s2 } : null;
+      })
+    );
+    setSyncState('ok', `실시간 연결됨`);
+    renderRoundNav();
+    renderMatches();
+    if (document.getElementById('sec-standings').classList.contains('on')) renderStandings();
+  }, err => {
+    console.error(err);
+    setSyncState('err', '연결 오류');
+  });
+}
+
+/* ══════════════════════════════════════
+   Firebase 읽기/쓰기
+══════════════════════════════════════ */
+async function fbSave(ri, mi, s1, s2) {
+  const key = `R${ri+1}M${mi+1}`;
+  await set(ref(db, `scores/${key}`), { s1, s2 });
+}
+async function fbRemove(ri, mi) {
+  const key = `R${ri+1}M${mi+1}`;
+  await remove(ref(db, `scores/${key}`));
+}
+
+/* ══════════════════════════════════════
+   유틸
+══════════════════════════════════════ */
+function setSyncState(state, txt) {
+  document.getElementById('sdot').className = 'sdot ' + state;
+  document.getElementById('stxt').textContent = txt;
+}
+const ini = n => n.charAt(0);
+function isValid(s1, s2) {
+  if (s1 === s2) return false;
+  const mx = Math.max(s1,s2), mn = Math.min(s1,s2);
+  if (mx < WIN_SCORE) return false;
+  if (mx === WIN_SCORE) return mn <= WIN_SCORE - 2;
+  return mx - mn === 2;
+}
+const winner = (s1,s2,p1,p2) => s1>s2?p1:s2>s1?p2:null;
+const hasScore = (ri,mi) => { const s=scores[ri]?.[mi]; return s && s.s1!==null && s.s2!==null; };
+
+/* ══════════════════════════════════════
+   관리자
+══════════════════════════════════════ */
+function applyAdmin() {
+  const pill = document.getElementById('apill');
+  if (isAdmin) {
+    pill.className = 'apill admin';
+    document.getElementById('apilltxt').textContent = '관리자 모드';
+    document.getElementById('vbanner').classList.remove('show');
+  } else {
+    pill.className = 'apill viewer';
+    document.getElementById('apilltxt').textContent = '뷰어 모드';
+    document.getElementById('vbanner').classList.add('show');
+  }
+  renderRoundNav(); renderMatches();
+}
+window.onPillClick = () => isAdmin ? openOv('ov-logout') : openOv('ov-login');
+
+window.pwInput = () => { document.getElementById('pwf').className='pwf'; document.getElementById('pwErr').textContent=''; };
+window.doLogin = () => {
+  if (document.getElementById('pwf').value === ADMIN_PW) {
+    isAdmin = true; closeOv('ov-login'); applyAdmin();
+    document.getElementById('pwf').value = '';
+  } else {
+    document.getElementById('pwf').className = 'pwf err';
+    document.getElementById('pwErr').textContent = '비밀번호가 올바르지 않습니다';
+    document.getElementById('pwf').value = '';
+    setTimeout(() => document.getElementById('pwf').className = 'pwf', 400);
+  }
+};
+window.doLogout = () => { isAdmin=false; closeOv('ov-logout'); applyAdmin(); };
+
+/* ══════════════════════════════════════
+   오버레이
+══════════════════════════════════════ */
+window.openOv  = id => { document.getElementById(id).classList.add('open'); if(id==='ov-login') setTimeout(()=>document.getElementById('pwf').focus(),300); };
+window.closeOv = id => { document.getElementById(id).classList.remove('open'); document.activeElement?.blur(); };
+['ov-login','ov-logout','ov-score'].forEach(id =>
+  document.getElementById(id).addEventListener('click', e => { if(e.target.id===id) closeOv(id); })
+);
+document.addEventListener('keydown', e => {
+  if(document.getElementById('ov-score').classList.contains('open')){
+    if(e.key==='Enter') saveScore(); if(e.key==='Escape') closeOv('ov-score');
+  }
+  if(document.getElementById('ov-login').classList.contains('open')&&e.key==='Escape') closeOv('ov-login');
+});
+
+/* ══════════════════════════════════════
+   렌더
+══════════════════════════════════════ */
+function renderRoundNav() {
+  const nav = document.getElementById('rnav');
+  nav.innerHTML = '';
+  ROUNDS.forEach((r, ri) => {
+    const done = r.matches.every((_,mi) => hasScore(ri,mi));
+    const btn = document.createElement('button');
+    btn.className = 'rbtn' + (ri===curRound?' on':'') + (done?' done':'');
+    btn.textContent = `${ri+1}R` + (done?' ✓':'');
+    btn.onclick = () => { curRound=ri; renderRoundNav(); renderMatches(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderMatches() {
+  const round = ROUNDS[curRound];
+  const done = round.matches.filter((_,mi) => hasScore(curRound,mi)).length;
+  document.getElementById('rtitle').textContent = `${curRound+1}라운드`;
+  document.getElementById('rprog').textContent = `${done}/${round.matches.length} 완료`;
+
+  const list = document.getElementById('mlist');
+  list.innerHTML = '';
+
+  round.matches.forEach(([p1,p2], mi) => {
+    const s = scores[curRound][mi];
+    const scored = hasScore(curRound, mi);
+    const w = scored ? winner(s.s1,s.s2,p1,p2) : null;
+    const p1w = w===p1, p2w = w===p2;
+    const courtLabel = round.courts[mi];
+    const courtCls = COURT_CLS[mi];
+
+    const wrap = document.createElement('div'); wrap.className='mwrap';
+    const card = document.createElement('div');
+    card.className = 'mcard' + (scored?' done':'') + (isAdmin?' clickable':'');
+
+    const clickAttr = isAdmin ? `class="minner clickable" onclick="openScore(${curRound},${mi})"` : `class="minner"`;
+    card.innerHTML = `
+      <div ${clickAttr}>
+        <div class="court-row">
+          <span class="court-badge ${courtCls}">${courtLabel}</span>
+          ${isAdmin ? '<span style="font-size:13px;opacity:.4">✏️</span>' : ''}
+        </div>
+        <div class="match-row">
+          <div class="pside left ${p1w?'winner':scored?'loser':''}">
+            <div class="avatar">${ini(p1)}</div>
+            <div class="pname">${p1}</div>
+          </div>
+          <div class="sarea">
+            <div class="sbox ${p1w?'win':scored?'lose':''}">${scored?s.s1:'–'}</div>
+            <div class="ssep">:</div>
+            <div class="sbox ${p2w?'win':scored?'lose':''}">${scored?s.s2:'–'}</div>
+          </div>
+          <div class="pside right ${p2w?'winner':scored?'loser':''}">
+            <div class="pname">${p2}</div>
+            <div class="avatar">${ini(p2)}</div>
+          </div>
+        </div>
+      </div>`;
+    wrap.appendChild(card);
+    list.appendChild(wrap);
+  });
+
+  const bye = document.createElement('div'); bye.className='mcard bye';
+  bye.innerHTML=`<div class="bye-content">🛌 이번 라운드 휴식: <strong>${round.bye}</strong></div>`;
+  list.appendChild(bye);
+}
+
+/* ══════════════════════════════════════
+   점수 입력
+══════════════════════════════════════ */
+window.openScore = (ri, mi) => {
+  if (!isAdmin) return;
+  const [p1,p2] = ROUNDS[ri].matches[mi];
+  const s = scores[ri][mi];
+  sheetData = {ri, mi};
+  document.getElementById('score-sub').textContent = `${ri+1}라운드 · ${ROUNDS[ri].courts[mi]} · ${mi+1}번 경기`;
+  document.getElementById('sp1').textContent = p1;
+  document.getElementById('sp2').textContent = p2;
+  const i1=document.getElementById('si1'), i2=document.getElementById('si2');
+  i1.value = (s&&s.s1!==null) ? s.s1 : '';
+  i2.value = (s&&s.s2!==null) ? s.s2 : '';
+  i1.className='sinput'; i2.className='sinput';
+  document.getElementById('rnote').textContent='';
+  document.getElementById('btnReset').style.display = (s&&s.s1!==null)?'flex':'none';
+  const btn=document.getElementById('btnSave'); btn.textContent='저장'; btn.disabled=false;
+  openOv('ov-score'); setTimeout(()=>i1.focus(),300);
+};
+
+window.onScoreInput = () => {
+  const s1=parseInt(document.getElementById('si1').value);
+  const s2=parseInt(document.getElementById('si2').value);
+  const note=document.getElementById('rnote');
+  const i1=document.getElementById('si1'), i2=document.getElementById('si2');
+  i1.className='sinput'; i2.className='sinput';
+  if (isNaN(s1)||isNaN(s2)) { note.textContent=''; return; }
+  if (!isValid(s1,s2)) {
+    note.textContent='⚠️ 15점 단세트 · 듀스 시 2점차 승리'; note.style.color='var(--lose)';
+  } else {
+    const [p1,p2]=ROUNDS[sheetData.ri].matches[sheetData.mi];
+    note.textContent=`✅ ${s1>s2?p1:p2} 승리`; note.style.color='var(--win)';
+    i1.className='sinput '+(s1>s2?'vwin':'vlose');
+    i2.className='sinput '+(s2>s1?'vwin':'vlose');
+  }
+};
+
+window.saveScore = async () => {
+  if (!sheetData||!isAdmin||isSaving) return;
+  const s1=parseInt(document.getElementById('si1').value);
+  const s2=parseInt(document.getElementById('si2').value);
+  if (isNaN(s1)||isNaN(s2)) { alert('두 선수의 점수를 모두 입력해주세요.'); return; }
+  if (!isValid(s1,s2)) { alert('유효하지 않은 점수\n15점 단세트 · 듀스 시 2점차'); return; }
+  isSaving=true;
+  const btn=document.getElementById('btnSave'); btn.textContent='저장 중...'; btn.disabled=true;
+  setSyncState('spin','저장 중...');
+  try {
+    await fbSave(sheetData.ri, sheetData.mi, s1, s2);
+    // onValue가 자동으로 UI 업데이트하므로 별도 렌더 불필요
+    setSyncState('ok','저장 완료');
+    closeOv('ov-score');
+  } catch(e) {
+    console.error(e);
+    setSyncState('err','저장 실패');
+    btn.textContent='저장'; btn.disabled=false;
+    alert('저장 실패: ' + e.message);
+  }
+  isSaving=false;
+};
+
+window.resetScore = async () => {
+  if (!sheetData||!isAdmin) return;
+  if (!confirm('이 경기 점수를 초기화할까요?')) return;
+  setSyncState('spin','초기화 중...');
+  try {
+    await fbRemove(sheetData.ri, sheetData.mi);
+    setSyncState('ok','초기화 완료');
+    closeOv('ov-score');
+  } catch(e) {
+    setSyncState('err','초기화 실패');
+    alert('초기화 실패: ' + e.message);
+  }
+};
+
+/* ══════════════════════════════════════
+   순위표
+══════════════════════════════════════ */
+function computeStandings() {
+  const st={};
+  PLAYERS.forEach(p=>st[p]={wins:0,losses:0,scored:0,conceded:0,played:0});
+  ROUNDS.forEach((r,ri)=>r.matches.forEach(([p1,p2],mi)=>{
+    if(!hasScore(ri,mi)) return;
+    const s=scores[ri][mi];
+    st[p1].scored+=s.s1; st[p1].conceded+=s.s2; st[p1].played++;
+    st[p2].scored+=s.s2; st[p2].conceded+=s.s1; st[p2].played++;
+    if(s.s1>s.s2){st[p1].wins++;st[p2].losses++;}
+    else{st[p2].wins++;st[p1].losses++;}
+  }));
+  return st;
+}
+
+function renderStandings() {
+  const st=computeStandings();
+  const totalM=ROUNDS.reduce((a,r)=>a+r.matches.length,0);
+  const playedM=ROUNDS.reduce((a,r,ri)=>a+r.matches.filter((_,mi)=>hasScore(ri,mi)).length,0);
+  const doneR=ROUNDS.filter((r,ri)=>r.matches.every((_,mi)=>hasScore(ri,mi))).length;
+
+  document.getElementById('sumbar').innerHTML=`
+    <div class="chip"><div class="cv">${doneR}/${ROUNDS.length}</div><div class="cl">완료 라운드</div></div>
+    <div class="chip"><div class="cv">${playedM}/${totalM}</div><div class="cl">완료 경기</div></div>
+    <div class="chip"><div class="cv">${PLAYERS.length}</div><div class="cl">참가 선수</div></div>`;
+
+  const sorted=PLAYERS.slice().sort((a,b)=>{
+    if(st[b].wins!==st[a].wins) return st[b].wins-st[a].wins;
+    const da=st[a].scored-st[a].conceded, db=st[b].scored-st[b].conceded;
+    if(db!==da) return db-da;
+    return st[b].scored-st[a].scored;
+  });
+  const maxW=Math.max(...sorted.map(p=>st[p].wins),1);
+  const list=document.getElementById('slist'); list.innerHTML='';
+  sorted.forEach((p,i)=>{
+    const s=st[p], rank=i+1, diff=s.scored-s.conceded;
+    const rc=rank<=3?`r${rank}`:'', bc=rank<=3?`r${rank}`:'rn';
+    const bw=Math.round(s.wins/maxW*100);
+    const dc=diff>0?'pos':diff<0?'neg':'zero';
+    const card=document.createElement('div');
+    card.className='scard'+(rc?' '+rc:'');
+    card.innerHTML=`
+      <div class="rbadge ${bc}">${rank}</div>
+      <div class="sinfo">
+        <div class="sname">${p}</div>
+        <div class="sbar-wrap"><div class="sbar" style="width:${bw}%"></div></div>
+      </div>
+      <div class="sstats">
+        <div class="swl"><span class="w">${s.wins}승</span><span class="sp"> / </span><span class="l">${s.losses}패</span></div>
+        <div class="ssc"><span class="g">${s.scored}</span> 득 · <span class="c">${s.conceded}</span> 실</div>
+        <div class="sdiff ${dc}">${s.played>0?(diff>0?'▲ ':'▼ ')+Math.abs(diff)+'점':'–'}</div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+window.showTab = id => {
+  ['rounds','standings'].forEach(t=>{
+    document.getElementById('sec-'+t).classList.toggle('on',t===id);
+    document.getElementById('tab-'+t).classList.toggle('on',t===id);
+  });
+  if(id==='standings') renderStandings();
+  document.querySelector('.content').scrollTop=0;
+};
+
+/* ══════════════════════════════════════
+   초기 로드
+══════════════════════════════════════ */
+const {dbUrl, apiKey} = loadConfig();
+if (dbUrl && apiKey) {
+  startApp(dbUrl, apiKey);
+} else {
+  document.getElementById('setup').classList.add('show');
+}
+</script>
+
+
+</body></html>
